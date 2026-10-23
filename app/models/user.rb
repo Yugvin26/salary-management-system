@@ -7,6 +7,7 @@ class User < ApplicationRecord
   belongs_to :location, optional: true
 
   enum :role, { human_resource: 0, employee: 1 }, validate: true
+  enum :work_mode, { remote: "remote", hybrid: "hybrid", in_office: "in_office" }
 
   scope :with_email, ->(email) { where("lower(email) = ?", email.to_s.strip.downcase) }
 
@@ -14,6 +15,16 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :email, uniqueness: { case_sensitive: false }
   validates :password, presence: true, confirmation: true, length: { within: 6..128 }, if: :password_required?
+  validates :employee_id, uniqueness: { allow_nil: true }
+  validates :employee_id, format: { with: /\AE\d{5,}\z/, message: "must be in format E12345" }, allow_nil: true
+  validates :work_mode, inclusion: { in: work_modes.keys }, allow_nil: true
+
+  with_options if: :employee? do
+    validates :employee_id, :job_title, :hire_date, :department, :location, :work_mode, presence: true
+    validates :active, inclusion: { in: [ true, false ] }
+  end
+
+  before_validation :auto_generate_employee_id, on: :create, if: :employee?
 
   def name
     [ first_name, last_name ].compact_blank.join(" ")
@@ -35,5 +46,17 @@ class User < ApplicationRecord
 
   def inactive_message
     employee? && !active? ? :archived : super
+  end
+
+  private
+
+  def auto_generate_employee_id
+    return if employee_id.present?
+
+    last_numeric_id = User.employee.where.not(employee_id: nil)
+                          .pluck(:employee_id)
+                          .map { |value| value.delete_prefix("E").to_i }
+                          .max.to_i
+    self.employee_id = format("E%05d", last_numeric_id + 1)
   end
 end

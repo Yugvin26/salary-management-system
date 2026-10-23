@@ -7,6 +7,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resource :session, only: %i[show create destroy]
+    resources :users, only: %i[create update]
+    resources :employees, only: %i[index show create update] do
+      member do
+        post :archive
+        post :unarchive
+      end
+    end
     resources :departments, only: %i[index show create update destroy]
     resources :locations, only: %i[index show create update destroy]
   end

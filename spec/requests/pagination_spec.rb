@@ -16,16 +16,17 @@ RSpec.describe "pagination", type: :request do
 
   it "defaults to 25 per page with a full meta block" do
     fetch
-    expect(json["meta"]).to eq("page" => 1, "per_page" => 25, "total" => 7, "total_pages" => 1)
+    # HR directory includes the signed-in HR user plus the seven employees.
+    expect(json["meta"]).to eq("page" => 1, "per_page" => 25, "total" => 8, "total_pages" => 1)
   end
 
   it "pages through results" do
     fetch(per_page: 3, page: 1)
     first_ids = json["data"].map { |row| row["id"] }
-    expect(json["meta"]).to include("total" => 7, "total_pages" => 3, "per_page" => 3)
+    expect(json["meta"]).to include("total" => 8, "total_pages" => 3, "per_page" => 3)
 
     fetch(per_page: 3, page: 3)
-    expect(json["data"].size).to eq(1)
+    expect(json["data"].size).to eq(2)
     expect(json["data"].map { |row| row["id"] } & first_ids).to be_empty
   end
 
@@ -38,7 +39,7 @@ RSpec.describe "pagination", type: :request do
     fetch(page: 99)
     expect(response).to have_http_status(:ok)
     expect(json["data"]).to eq([])
-    expect(json.dig("meta", "total")).to eq(7)
+    expect(json.dig("meta", "total")).to eq(8)
   end
 
   it "rejects invalid paging parameters with a 400" do

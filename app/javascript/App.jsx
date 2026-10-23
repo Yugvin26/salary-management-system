@@ -3,6 +3,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { AuthProvider, useAuth } from "./auth_context"
 import Login from "./components/Login"
 import Layout from "./components/Layout"
+import EmployeeList from "./components/EmployeeList"
+import EmployeeForm from "./components/EmployeeForm"
 import Departments from "./components/Departments"
 import Locations from "./components/Locations"
 
@@ -38,6 +40,9 @@ export default function App() {
 
           <Route element={<RequireRole><Layout /></RequireRole>}>
             <Route path="/" element={<Home />} />
+            <Route path="/employees" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeList /></RequireRole>} />
+            <Route path="/employees/new" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeForm /></RequireRole>} />
+            <Route path="/employees/:id/edit" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeForm /></RequireRole>} />
             <Route path="/departments" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Departments /></RequireRole>} />
             <Route path="/locations" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Locations /></RequireRole>} />
           </Route>
