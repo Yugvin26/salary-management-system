@@ -3,6 +3,8 @@
 class User < ApplicationRecord
   devise :database_authenticatable
 
+  belongs_to :department, optional: true
+
   enum :role, { human_resource: 0, employee: 1 }, validate: true
 
   scope :with_email, ->(email) { where("lower(email) = ?", email.to_s.strip.downcase) }

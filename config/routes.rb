@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resource :session, only: %i[show create destroy]
+    resources :departments, only: %i[index show create update destroy]
   end
 
   root "spa#index"
