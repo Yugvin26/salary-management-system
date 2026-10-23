@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+Rails.application.routes.draw do
+  devise_for :users, skip: :all
+
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  root "spa#index"
+  # Catch-all only for browser navigation; unknown API/asset/file requests keep their 404.
+  get "*path", to: "spa#index", format: false, constraints: lambda { |request|
+    request.format.html? && !request.path.match?(%r{\A/(api|rails|assets|up)(/|\z)})
+  }
+end

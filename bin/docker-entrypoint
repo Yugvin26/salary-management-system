@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /app
+
+# Stale PID from a previous container crash blocks Puma on bind-mounted ./tmp
+rm -f tmp/pids/server.pid
+
+bundle check || bundle install
+if [ ! -d node_modules/react ]; then
+  yarn install --frozen-lockfile
+fi
+if [ "$#" -eq 0 ] || [ "${1:-}" = "bin/dev" ]; then
+  yarn build
+  bin/rails db:prepare
+  exec bin/dev
+fi
+exec "$@"

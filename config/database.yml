@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: salary_management_system_development
+  url: <%= ENV["DATABASE_URL"] %>
+
+test:
+  <<: *default
+  database: salary_management_system_test
+  url: <%= ENV["TEST_DATABASE_URL"].presence || ENV["DATABASE_URL"]&.sub(%r{/[^/]+\z}, "/salary_management_system_test") %>
+
+production:
+  <<: *default
+  database: salary_management_system_production
+  url: <%= ENV["DATABASE_URL"] %>
