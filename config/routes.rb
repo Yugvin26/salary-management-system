@@ -5,6 +5,10 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
+  namespace :api, defaults: { format: :json } do
+    resource :session, only: %i[show create destroy]
+  end
+
   root "spa#index"
   # Catch-all only for browser navigation; unknown API/asset/file requests keep their 404.
   get "*path", to: "spa#index", format: false, constraints: lambda { |request|
