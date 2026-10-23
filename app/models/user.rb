@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable
 
   belongs_to :department, optional: true
+  belongs_to :location, optional: true
 
   enum :role, { human_resource: 0, employee: 1 }, validate: true
 

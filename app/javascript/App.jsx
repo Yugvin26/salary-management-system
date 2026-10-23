@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "./auth_context"
 import Login from "./components/Login"
 import Layout from "./components/Layout"
 import Departments from "./components/Departments"
+import Locations from "./components/Locations"
 
 const STAFF_ROLES = ["human_resource", "company_admin"]
 
@@ -38,6 +39,7 @@ export default function App() {
           <Route element={<RequireRole><Layout /></RequireRole>}>
             <Route path="/" element={<Home />} />
             <Route path="/departments" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Departments /></RequireRole>} />
+            <Route path="/locations" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Locations /></RequireRole>} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
