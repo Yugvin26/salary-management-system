@@ -13,7 +13,9 @@ Rails.application.routes.draw do
         post :archive
         post :unarchive
       end
+      resources :salaries, only: %i[index create]
     end
+    get "salaries/:salary_id/versions", to: "salary_versions#index"
     resources :departments, only: %i[index show create update destroy]
     resources :locations, only: %i[index show create update destroy]
   end

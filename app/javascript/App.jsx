@@ -5,6 +5,7 @@ import Login from "./components/Login"
 import Layout from "./components/Layout"
 import EmployeeList from "./components/EmployeeList"
 import EmployeeForm from "./components/EmployeeForm"
+import EmployeeDetail from "./components/EmployeeDetail"
 import Departments from "./components/Departments"
 import Locations from "./components/Locations"
 
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/employees" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeList /></RequireRole>} />
             <Route path="/employees/new" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeForm /></RequireRole>} />
+            <Route path="/employees/:id" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeDetail /></RequireRole>} />
             <Route path="/employees/:id/edit" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeForm /></RequireRole>} />
             <Route path="/departments" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Departments /></RequireRole>} />
             <Route path="/locations" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Locations /></RequireRole>} />

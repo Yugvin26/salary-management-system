@@ -5,6 +5,12 @@ class User < ApplicationRecord
 
   belongs_to :department, optional: true
   belongs_to :location, optional: true
+  has_many :salaries, foreign_key: :employee_id, inverse_of: :employee, dependent: :delete_all
+  has_one :current_base_salary,
+          -> { where(current: true, salary_type: :base) },
+          class_name: "Salary",
+          foreign_key: :employee_id,
+          inverse_of: :employee
 
   enum :role, { human_resource: 0, employee: 1 }, validate: true
   enum :work_mode, { remote: "remote", hybrid: "hybrid", in_office: "in_office" }
