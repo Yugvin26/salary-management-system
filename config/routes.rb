@@ -18,6 +18,12 @@ Rails.application.routes.draw do
     get "salaries/:salary_id/versions", to: "salary_versions#index"
     resources :departments, only: %i[index show create update destroy]
     resources :locations, only: %i[index show create update destroy]
+    get "reports/dashboard", to: "reports#dashboard"
+    get "reports/departments", to: "reports#departments"
+    get "reports/job_titles", to: "reports#job_titles"
+    get "reports/countries", to: "reports#countries"
+    get "reports/export", to: "reports#export"
+    get "reports/export_grouped", to: "reports#export_grouped"
   end
 
   root "spa#index"

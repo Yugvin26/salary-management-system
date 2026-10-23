@@ -3,11 +3,13 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { AuthProvider, useAuth } from "./auth_context"
 import Login from "./components/Login"
 import Layout from "./components/Layout"
+import Dashboard from "./components/Dashboard"
 import EmployeeList from "./components/EmployeeList"
 import EmployeeForm from "./components/EmployeeForm"
 import EmployeeDetail from "./components/EmployeeDetail"
 import Departments from "./components/Departments"
 import Locations from "./components/Locations"
+import Reports from "./components/Reports"
 
 const STAFF_ROLES = ["human_resource", "company_admin"]
 
@@ -29,7 +31,8 @@ function RequireRole({ children, allow, onDeny = "home" }) {
 function Home() {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
-  return <div className="card p-6 text-sm text-stone-600">Signed in as {user.email}</div>
+  if (user.role === "super_admin") return <Navigate to="/site-admin" replace />
+  return user.role === "employee" ? <Navigate to="/me" replace /> : <Dashboard />
 }
 
 export default function App() {
@@ -47,6 +50,7 @@ export default function App() {
             <Route path="/employees/:id/edit" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><EmployeeForm /></RequireRole>} />
             <Route path="/departments" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Departments /></RequireRole>} />
             <Route path="/locations" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Locations /></RequireRole>} />
+            <Route path="/reports" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Reports /></RequireRole>} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
