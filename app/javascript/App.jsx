@@ -10,6 +10,7 @@ import EmployeeDetail from "./components/EmployeeDetail"
 import Departments from "./components/Departments"
 import Locations from "./components/Locations"
 import Reports from "./components/Reports"
+import SelfProfile from "./components/SelfProfile"
 
 const STAFF_ROLES = ["human_resource", "company_admin"]
 
@@ -51,6 +52,7 @@ export default function App() {
             <Route path="/departments" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Departments /></RequireRole>} />
             <Route path="/locations" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Locations /></RequireRole>} />
             <Route path="/reports" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Reports /></RequireRole>} />
+            <Route path="/me" element={<SelfProfile />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

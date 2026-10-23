@@ -12,7 +12,7 @@ export default function Login() {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    if (user) navigate("/", { replace: true })
+    if (user) navigate(user.role === "employee" ? "/me" : user.role === "super_admin" ? "/site-admin" : "/", { replace: true })
   }, [user, navigate])
 
   async function submit(event) {
@@ -21,7 +21,7 @@ export default function Login() {
     try {
       const payload = await api("/api/session", { method: "POST", body: { email, password } })
       setUser(payload.data)
-      navigate("/")
+      navigate(payload.data.role === "employee" ? "/me" : "/")
     } catch (err) {
       setError(errorMessage(err.payload || { errors: { base: ["Invalid email or password"] } }))
     }
