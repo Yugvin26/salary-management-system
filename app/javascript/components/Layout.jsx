@@ -2,7 +2,15 @@ import React from "react"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { useAuth, useSignOut } from "../auth_context"
 
-const itemsFor = () => [["/", "Home"]]
+const itemsFor = (role) => {
+  if (role === "human_resource") {
+    return [["/", "Home"], ["/departments", "Departments"]]
+  }
+  if (role === "company_admin") {
+    return [["/", "Home"], ["/departments", "Departments"]]
+  }
+  return [["/me", "My profile"]]
+}
 
 export default function Layout() {
   const { user } = useAuth()
@@ -21,7 +29,7 @@ export default function Layout() {
       </header>
       <aside className="fixed bottom-0 left-0 top-16 w-60 border-r border-ink/10 bg-white/80 p-3 backdrop-blur">
         <nav className="space-y-1">
-          {itemsFor().map(([path, label]) => (
+          {itemsFor(user?.role).map(([path, label]) => (
             <button
               key={path}
               type="button"
