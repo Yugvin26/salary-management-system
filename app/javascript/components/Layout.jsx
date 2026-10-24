@@ -4,10 +4,10 @@ import { useAuth, useSignOut } from "../auth_context"
 
 const itemsFor = (role) => {
   if (role === "human_resource") {
-    return [["/", "Dashboard"], ["/employees", "Employees"], ["/departments", "Departments"], ["/locations", "Locations"], ["/reports", "Reports"]]
+    return [["/", "Dashboard"], ["/employees", "Employees"], ["/departments", "Departments"], ["/locations", "Locations"], ["/reports", "Reports"], ["/password-resets", "Password resets"]]
   }
   if (role === "company_admin") {
-    return [["/", "Dashboard"], ["/employees", "Employees"], ["/departments", "Departments"], ["/locations", "Locations"], ["/reports", "Reports"], ["/settings", "Company theme"]]
+    return [["/", "Dashboard"], ["/employees", "Employees"], ["/departments", "Departments"], ["/locations", "Locations"], ["/reports", "Reports"], ["/password-resets", "Password resets"], ["/settings", "Company theme"]]
   }
   return [["/me", "My profile"]]
 }

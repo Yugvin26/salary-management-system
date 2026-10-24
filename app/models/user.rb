@@ -7,6 +7,7 @@ class User < ApplicationRecord
   belongs_to :department, optional: true
   belongs_to :location, optional: true
   has_many :salaries, foreign_key: :employee_id, inverse_of: :employee, dependent: :delete_all
+  has_many :password_reset_requests, dependent: :delete_all
   has_one :current_base_salary,
           -> { where(current: true, salary_type: :base) },
           class_name: "Salary",

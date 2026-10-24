@@ -38,6 +38,9 @@ export default function Login() {
       </label>
       <button className="btn-primary w-full py-3.5 text-base" type="submit">Sign in</button>
       <p className="text-center text-sm text-stone-500">
+        <a className="font-semibold text-ink underline-offset-2 hover:underline" href="/forgot-password">Forgot password</a>
+      </p>
+      <p className="text-center text-sm text-stone-500">
         Platform owner? <a className="font-semibold text-ink underline-offset-2 hover:underline" href="/site-admin">Open site admin</a>
       </p>
     </AuthCard>

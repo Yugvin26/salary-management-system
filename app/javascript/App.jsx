@@ -13,6 +13,8 @@ import Reports from "./components/Reports"
 import SelfProfile from "./components/SelfProfile"
 import SiteAdmin from "./components/SiteAdmin"
 import CompanySettings from "./components/CompanySettings"
+import ForgotPassword from "./components/ForgotPassword"
+import PasswordResets from "./components/PasswordResets"
 
 const STAFF_ROLES = ["human_resource", "company_admin"]
 
@@ -44,6 +46,7 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/site-admin" element={<SiteAdmin />} />
           <Route element={<RequireRole><Layout /></RequireRole>}>
             <Route path="/" element={<Home />} />
@@ -54,6 +57,7 @@ export default function App() {
             <Route path="/departments" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Departments /></RequireRole>} />
             <Route path="/locations" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Locations /></RequireRole>} />
             <Route path="/reports" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><Reports /></RequireRole>} />
+            <Route path="/password-resets" element={<RequireRole allow={STAFF_ROLES} onDeny="staff"><PasswordResets /></RequireRole>} />
             <Route path="/settings" element={<RequireRole allow={["company_admin"]}><CompanySettings /></RequireRole>} />
             <Route path="/me" element={<SelfProfile />} />
           </Route>
