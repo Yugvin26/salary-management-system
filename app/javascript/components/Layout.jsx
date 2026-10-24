@@ -7,7 +7,7 @@ const itemsFor = (role) => {
     return [["/", "Dashboard"], ["/employees", "Employees"], ["/departments", "Departments"], ["/locations", "Locations"], ["/reports", "Reports"]]
   }
   if (role === "company_admin") {
-    return [["/", "Dashboard"], ["/employees", "Employees"], ["/departments", "Departments"], ["/locations", "Locations"], ["/reports", "Reports"]]
+    return [["/", "Dashboard"], ["/employees", "Employees"], ["/departments", "Departments"], ["/locations", "Locations"], ["/reports", "Reports"], ["/settings", "Company theme"]]
   }
   return [["/me", "My profile"]]
 }

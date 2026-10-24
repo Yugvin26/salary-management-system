@@ -37,6 +37,9 @@ export default function Login() {
         <input className="field mt-2 py-3.5 text-base" type="password" required value={password} onChange={(event) => setPassword(event.target.value)} />
       </label>
       <button className="btn-primary w-full py-3.5 text-base" type="submit">Sign in</button>
+      <p className="text-center text-sm text-stone-500">
+        Platform owner? <a className="font-semibold text-ink underline-offset-2 hover:underline" href="/site-admin">Open site admin</a>
+      </p>
     </AuthCard>
   )
 }

@@ -19,6 +19,11 @@ Rails.application.routes.draw do
     resources :departments, only: %i[index show create update destroy]
     resources :locations, only: %i[index show create update destroy]
     resource :profile, only: [ :show ]
+    resource :company_setting, only: %i[show update]
+    namespace :site_admin do
+      resource :session, only: [ :create ], controller: "sessions"
+      resources :companies, only: %i[index create update destroy]
+    end
     get "reports/dashboard", to: "reports#dashboard"
     get "reports/departments", to: "reports#departments"
     get "reports/job_titles", to: "reports#job_titles"
