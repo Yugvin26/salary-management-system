@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { api, errorMessage } from "../api_client"
 import { useAuth } from "../auth_context"
 import { ErrorBanner, Pager, rowClass, SalaryHistoryTable, salaryLabel } from "../ui_helpers"
+import MonthlyPayout from "./MonthlyPayout"
 
 function employeeFacts(employee) {
   const jobType = employee.work_mode
@@ -132,6 +133,7 @@ export default function EmployeeDetail() {
         ))}
       </dl>
 
+      <MonthlyPayout payout={salaryMeta.monthly_payout} />
 
       <h2 className="text-xl font-semibold text-ink">Salary history</h2>
       <div className="card overflow-hidden">

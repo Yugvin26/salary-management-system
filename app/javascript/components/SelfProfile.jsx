@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { api } from "../api_client"
 import { ErrorBanner, SalaryHistoryTable } from "../ui_helpers"
+import MonthlyPayout from "./MonthlyPayout"
 
 export default function SelfProfile() {
   const [profile, setProfile] = useState(null)
@@ -25,6 +26,7 @@ export default function SelfProfile() {
         <p>Location {profile.location?.name}, {profile.location?.country} · Hired {profile.hire_date}</p>
       </div>
       <p className="rounded-xl bg-sky-50 px-4 py-3 text-sm text-sky-900">Your salary history is read-only.</p>
+      <MonthlyPayout payout={profile.monthly_payout} />
       <div className="card overflow-hidden">
         <SalaryHistoryTable salaries={profile.salaries || []} statusLabel="Status" />
       </div>
